@@ -58,7 +58,7 @@ hal_memory_status_t hal_memory_alloc(uint32_t size, void **out_pointer) {
     const uint32_t padding = (alignment - memory.used % alignment) % alignment;
     const uint32_t remaining = memory.capacity - memory.used;
 
-    /* Subtract before adding so even a UINT32_MAX request cannot wrap the cursor. */
+    // Subtract before adding so even a UINT32_MAX request cannot wrap the cursor.
     if (padding > remaining || size > remaining - padding) {
         return HAL_MEMORY_NO_MEMORY;
     }
