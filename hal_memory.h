@@ -62,13 +62,13 @@ hal_memory_status_t hal_memory_init(void *buffer, uint32_t capacity);
  *
  * @details Blocks are uninitialized; alignment padding consumes capacity.
  * Extended alignment is unsupported. Failure consumes no storage. When
- * out_pointer is non-NULL, *out_pointer is cleared before validation and receives
+ * pointer is non-NULL, *pointer is cleared before validation and receives
  * the block address only on success. The output must not overlap
  * backing storage. Pass an actual void * variable's address, then assign it to
  * the typed pointer; do not cast a typed pointer-to-pointer to void **.
  *
  * @param[in] size Positive requested byte count.
- * @param[out] out_pointer Required pointer output, independent of the arena.
+ * @param[out] pointer Required pointer output, independent of the arena.
  *
  * @retval HAL_MEMORY_OK A disjoint block of size bytes is reserved.
  * @retval HAL_MEMORY_INVALID_ARGUMENT A required pointer is NULL or size is zero.
@@ -76,7 +76,7 @@ hal_memory_status_t hal_memory_init(void *buffer, uint32_t capacity);
  * @retval HAL_MEMORY_INVALID_STATE The arena is sealed.
  * @retval HAL_MEMORY_NO_MEMORY The block and required padding do not fit.
  */
-hal_memory_status_t hal_memory_alloc(uint32_t size, void **out_pointer);
+hal_memory_status_t hal_memory_alloc(uint32_t size, void **pointer);
 
 /**
  * @brief Permanently prevent further allocations without altering live blocks.
@@ -95,13 +95,13 @@ hal_memory_status_t hal_memory_seal(void);
  * @details Queries allocate no storage and remain available after sealing.
  * The output is written only on success and must not overlap backing storage.
  *
- * @param[out] out_info Required independent snapshot output.
+ * @param[out] info Required independent snapshot output.
  *
  * @retval HAL_MEMORY_OK The snapshot was written.
  * @retval HAL_MEMORY_INVALID_ARGUMENT A required pointer is NULL.
  * @retval HAL_MEMORY_NOT_INITIALIZED The arena has not been initialized.
  */
-hal_memory_status_t hal_memory_get_info(hal_memory_info_t *out_info);
+hal_memory_status_t hal_memory_get_info(hal_memory_info_t *info);
 
 #ifdef __cplusplus
 }

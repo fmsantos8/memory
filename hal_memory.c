@@ -37,12 +37,12 @@ hal_memory_status_t hal_memory_init(void *buffer, uint32_t capacity) {
     return HAL_MEMORY_OK;
 }
 
-hal_memory_status_t hal_memory_alloc(uint32_t size, void **out_pointer) {
-    if (out_pointer != NULL) {
-        *out_pointer = NULL;
+hal_memory_status_t hal_memory_alloc(uint32_t size, void **pointer) {
+    if (pointer != NULL) {
+        *pointer = NULL;
     }
 
-    if (out_pointer == NULL || size == 0) {
+    if (pointer == NULL || size == 0) {
         return HAL_MEMORY_INVALID_ARGUMENT;
     }
 
@@ -63,7 +63,7 @@ hal_memory_status_t hal_memory_alloc(uint32_t size, void **out_pointer) {
         return HAL_MEMORY_NO_MEMORY;
     }
 
-    *out_pointer = memory.buffer + memory.used + padding;
+    *pointer = memory.buffer + memory.used + padding;
     memory.used += padding + size;
     return HAL_MEMORY_OK;
 }
@@ -77,8 +77,8 @@ hal_memory_status_t hal_memory_seal(void) {
     return HAL_MEMORY_OK;
 }
 
-hal_memory_status_t hal_memory_get_info(hal_memory_info_t *out_info) {
-    if (out_info == NULL) {
+hal_memory_status_t hal_memory_get_info(hal_memory_info_t *info) {
+    if (info == NULL) {
         return HAL_MEMORY_INVALID_ARGUMENT;
     }
 
@@ -86,7 +86,7 @@ hal_memory_status_t hal_memory_get_info(hal_memory_info_t *out_info) {
         return HAL_MEMORY_NOT_INITIALIZED;
     }
 
-    *out_info = (hal_memory_info_t){
+    *info = (hal_memory_info_t){
         .capacity = memory.capacity,
         .used = memory.used,
         .remaining = memory.capacity - memory.used,
